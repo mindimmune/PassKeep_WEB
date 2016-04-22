@@ -1,5 +1,5 @@
 !!!
-%html
+%html{data: {"ng-app"=>true}}
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title PassKeep
@@ -7,9 +7,14 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    #wrapper
+    #global-wrapper
       .navbar.navbar-default
-        .container-fluid
-          .navbar-header
-            %a.navbar-brand{ href: "#" } PASSKEEP
-      = yield
+        .navbar-header
+          %a.navbar-brand{ href: "#" } PASSKEEP
+      #content-wrapper
+        .navbar-default.sidebar
+          .sidebar-nav.navbar-collapse
+            %ul.nav
+              %li qweqw
+        #page-content
+          = yield
