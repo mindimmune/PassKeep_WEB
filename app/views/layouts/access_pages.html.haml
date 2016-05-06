@@ -1,0 +1,17 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %title ????
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    = stylesheet_link_tag    'access', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'access', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    .container
+      .row
+        .col-md-4.col-md-offset-4
+          .login-panel.panel.panel-default
+            .panel-heading
+              %h3.panel-title ????
+            .panel-body
+              = yield

@@ -38,6 +38,8 @@ gem 'angularjs-rails'
 gem "haml-rails"
 gem 'sorcery'
 gem 'kaminari'
+gem "font-awesome-rails"
+gem 'responders'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

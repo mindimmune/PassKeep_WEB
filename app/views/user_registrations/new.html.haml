@@ -1,0 +1,9 @@
+%form
+  %fieldset
+    .form-group
+      %input.form-control{:autofocus => "", :name => "email", :placeholder => "#{t(:email)}", :type => "email"}/
+    .form-group
+      %input.form-control{:name => "password", :placeholder => "#{t(:password)}", :type => "password", :value => ""}/
+    .form-group
+      %input.form-control{:name => "password_confirmation", :placeholder => "#{t(:confirm_password)}", :type => "password", :value => ""}/
+    %a.btn.btn-lg.btn-success.btn-block{:href => "index.html"}= t(:sign_up_button)

@@ -4,6 +4,16 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
+  resources :user_sessions
+  resources :user_registrations
+  resources :password_resets
+
+  get 'login' => 'user_sessions#new', :as => :login
+  post 'logout' => 'user_sessions#destroy', :as => :logout
+
+  get 'registration' => 'user_registrations#new', :as => :registration
+  post 'create_user' => 'user_registrations#create', :as => :create_user
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
