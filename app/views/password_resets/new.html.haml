@@ -1,4 +1,4 @@
-= provide(:title, t('buttons.reset_password_button'))
+= provide(:title, t('buttons.reset_password'))
 
 .login-panel.panel.panel-default
   .panel-heading
@@ -8,4 +8,4 @@
       %fieldset.m-b
         .form-group
           = email_field_tag :email, nil, placeholder: t('labels.email'), class: "form-control"
-        = submit_tag t('buttons.reset_password_button'), class: "btn btn-lg btn-success btn-block"
+        = submit_tag t('buttons.reset_password'), class: "btn btn-lg btn-success btn-block"

@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
     if @user = login(params[:email], params[:password])
       redirect_back_or_to root_path #, info: t('authentication.sign_in_succeed'
     else
-      flash.now[:alert] = t('authentication.sign_in_failed')
+      flash.now[:danger] = t('authentication.sign_in_failed')
       render action: 'new'
     end
   end

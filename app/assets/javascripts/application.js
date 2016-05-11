@@ -14,5 +14,6 @@
 //= require bootstrap
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
 //= require angular
+//= require metismenu
+//= require main/site_scripts

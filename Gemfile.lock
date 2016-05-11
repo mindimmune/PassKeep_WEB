@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/lanvige/metismenu-rails.git
+  revision: 9a24de213398f54b372c1cf506af3cd8ebbf3069
+  specs:
+    metismenu-rails (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -232,6 +238,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   kaminari
+  metismenu-rails!
   pg (~> 0.15)
   rails (= 4.2.6)
   responders

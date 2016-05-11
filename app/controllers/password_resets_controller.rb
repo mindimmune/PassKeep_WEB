@@ -15,7 +15,7 @@ class PasswordResetsController < ApplicationController
 
     # Tell the user instructions have been sent whether or not email was found.
     # This is to not leak information to attackers about which emails exist in the system.
-    redirect_to signin_path, flash: { warning: t('reset_password.reset_password_instructions_notice') }
+    redirect_to signin_path, flash: { warning: t('reset_password.instructions_notice') }
   end
 
   # This is the reset password form.
@@ -35,16 +35,16 @@ class PasswordResetsController < ApplicationController
     @user = User.load_from_reset_password_token(params[:id])
 
     if @user.blank?
-      not_authenticated
-      return
+      redirect_to signin_path, flash: {danger: t('reset_password.wrong_token') }
     end
 
     # the next line makes the password confirmation validation work
     @user.password_confirmation = params[:user][:password_confirmation]
     # the next line clears the temporary token and updates the password
     if @user.change_password!(params[:user][:password])
-      redirect_to(root_path, :notice => t('reset_password.reset_password_success_notice'))
+      redirect_to signin_path, flash: {success: t('reset_password.success_notice') }
     else
+      flash.now[:danger] = @user.errors.full_messages.to_sentence
       render :action => "edit"
     end
   end

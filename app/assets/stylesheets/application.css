@@ -12,5 +12,6 @@
  *
  *= require_self
  *= require main/main_imports
+ *= require metismenu
  *= require common
  */

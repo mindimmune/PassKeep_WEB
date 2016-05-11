@@ -1,21 +1,15 @@
-%h1 Choose a new password
-= form_for @user, :url => password_reset_path(@token), :html => {:method => :put} do |f|
-  - if @user.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@user.errors.count, "error")
-        prohibited this user from being saved:
-      %ul
-        - @user.errors.full_messages.each do |msg|
-          %li= msg
-  .field
-    = f.label :email
-    = @user.email
-  .field
-    = f.label :password
-    = f.password_field :password
-  .field
-    = f.label :password_confirmation
-    = f.password_field :password_confirmation
-  .actions
-    = f.submit
+
+= provide(:title, t('requests.choose_new_password'))
+
+.login-panel.panel.panel-default
+  .panel-heading
+    %h3.panel-title= "#{t('requests.please')}, #{t('requests.choose_new_password')}"
+  .panel-body
+    = form_for @user, url: password_reset_path(@token), html: {method: :put} do |f|
+      %fieldset.m-b
+        .form-group
+          = f.password_field :password, placeholder: t('labels.password'), class: "form-control"
+        .form-group
+          = f.password_field :password_confirmation, class: "form-control",
+            placeholder: t('labels.confirm_password')
+        = f.submit t('buttons.change_password'), class: "btn btn-lg btn-success btn-block"

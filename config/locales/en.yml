@@ -21,19 +21,21 @@
 
 en:
   buttons:
-    sign_up_button: "Sign up"
-    sign_in_button: "Sign in"
-    sign_out_button: "Sign out"
-    reset_password_button: "Reset my password"
-    create_account_button: "Create an account"
+    sign_up: "Sign up"
+    sign_in: "Sign in"
+    sign_out: "Sign out"
+    reset_password: "Reset my password"
+    create_account: "Create an account"
+    change_password: "Change password"
   labels:
     email: "E-mail"
     password: "Password"
     confirm_password: "Confirm password"
     remember_me: "Remember me"
   reset_password:
-    reset_password_instructions_notice: "Instructions have been sent to your email."
-    reset_password_success_notice: "Password was successfully updated."
+    instructions_notice: "Instructions have been sent to your email."
+    success_notice: "Password was successfully updated."
+    wrong_token: "Incorrect token!"
   registration:
 #    user_creation_fail_notice: "User creation failed! Please, contact to support."
     user_activation_create_notice: "Please, activate your account via email."
@@ -48,6 +50,7 @@ en:
 #    please_proceed: "Please, proceed"
     please: "Please"
     enter_email: "Enter your email"
+    choose_new_password: "Choose new password"
   questions:
     new_user: "New user?"
     forgot_password: "Forgot password?"
