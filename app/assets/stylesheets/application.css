@@ -11,5 +11,6 @@
  * file per style scope.
  *
  *= require_self
- *= require main/common
+ *= require main/main_imports
+ *= require common
  */

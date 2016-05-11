@@ -1,21 +1,23 @@
 class UserSessionsController < ApplicationController
   layout "access_pages"
 
+  skip_before_action :require_login, except: [:destroy]
+
   def new
     @user = User.new
   end
 
   def create
     if @user = login(params[:email], params[:password])
-      redirect_back_or_to(:users, notice: t(:login_succeed))
+      redirect_back_or_to root_path #, info: t('authentication.sign_in_succeed'
     else
-      flash.now[:alert] = t(:login_failed)
+      flash.now[:alert] = t('authentication.sign_in_failed')
       render action: 'new'
     end
   end
 
   def destroy
     logout
-    redirect_to(:users, notice: t(:logged_out))
+    redirect_to signin_path, flash: { info: t('authentication.signed_out') }
   end
 end

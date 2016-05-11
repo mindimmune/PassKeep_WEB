@@ -1,0 +1,22 @@
+.navbar.navbar-default
+  .navbar-header
+    %a.navbar-brand{ href: "#" } PASSKEEP
+  %ul.nav.navbar-top-links.navbar-right
+    %li.dropdown
+      %a.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :href => "#"}
+        %i.fa.fa-user.fa-fw
+        %i.fa.fa-caret-down
+      %ul.dropdown-menu.dropdown-user
+        %li
+          %a{:href => "#"}
+            %i.fa.fa-user.fa-fw
+            User Profile ???
+        %li
+          %a{:href => "#"}
+            %i.fa.fa-gear.fa-fw
+            Settings ????
+        %li.divider
+        %li
+          = link_to signout_path do
+            %i.fa.fa-sign-out.fa-fw
+            = t('buttons.sign_out_button')

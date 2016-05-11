@@ -1,23 +1,20 @@
 class UserMailer < ApplicationMailer
 
   def activation_needed_email(user)
-    @user = user
-    @url  = "http://0.0.0.0:3000/users/#{user.activation_token}/activate"
+    @url = activate_user_registration_url(user.activation_token)
     mail(:to => user.email,
-     :subject => t(:mailer_activation_need))
+     :subject => t('.subject'))
   end
 
   def activation_success_email(user)
-    @user = user
-    @url  = "http://0.0.0.0:3000/login"
+    @url = signin_url
     mail(:to => user.email,
-     :subject => t(:mailer_activation_success))
+     :subject => t('.subject'))
   end
 
   def reset_password_email(user)
-    @user = User.find user.id
-    @url  = edit_password_reset_url(@user.reset_password_token)
+    @url  = edit_password_reset_url(user.reset_password_token)
     mail(:to => user.email,
-     :subject => t(:mailer_reset_password))
+     :subject => t('.subject'))
   end
 end

@@ -1,5 +1,9 @@
 class PasswordResetsController < ApplicationController
+  layout "access_pages"
   skip_before_filter :require_login
+
+  def new
+  end
 
   # request password reset.
   # you get here when the user entered his email in the reset password form and submitted it.
@@ -11,7 +15,7 @@ class PasswordResetsController < ApplicationController
 
     # Tell the user instructions have been sent whether or not email was found.
     # This is to not leak information to attackers about which emails exist in the system.
-    redirect_to(root_path, :notice => t(:reset_password_instructions_notice))
+    redirect_to signin_path, flash: { warning: t('reset_password.reset_password_instructions_notice') }
   end
 
   # This is the reset password form.
@@ -39,7 +43,7 @@ class PasswordResetsController < ApplicationController
     @user.password_confirmation = params[:user][:password_confirmation]
     # the next line clears the temporary token and updates the password
     if @user.change_password!(params[:user][:password])
-      redirect_to(root_path, :notice => t(:reset_password_success_notice))
+      redirect_to(root_path, :notice => t('reset_password.reset_password_success_notice'))
     else
       render :action => "edit"
     end

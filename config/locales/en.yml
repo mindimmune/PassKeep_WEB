@@ -20,21 +20,51 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
-  not_authenticated: "Please login first"
-  sign_up_button: "Sign up"
-  log_in_button: "Login"
-  email: "E-mail"
-  password: "Password"
-  confirm_password: "Confirm password"
-  remember_me: "Remember me"
-  reset_password_instructions_notice: "Instructions have been sent to your email."
-  reset_password_success_notice: "Password was successfully updated."
-  user_activation_create_notice: "Please, activate your account."
-  user_activation_success_notice: "User was successfully activated."
-  login_failed: "Login failed"
-  login_succeed: "Login successful"
-  logged_out: "Logged out!"
-  mailer_activation_need: "Welcome to My Awesome Site!"
-  mailer_activation_success: "Your account is now activated"
-  mailer_reset_password: "Your password has been reset"
+  buttons:
+    sign_up_button: "Sign up"
+    sign_in_button: "Sign in"
+    sign_out_button: "Sign out"
+    reset_password_button: "Reset my password"
+    create_account_button: "Create an account"
+  labels:
+    email: "E-mail"
+    password: "Password"
+    confirm_password: "Confirm password"
+    remember_me: "Remember me"
+  reset_password:
+    reset_password_instructions_notice: "Instructions have been sent to your email."
+    reset_password_success_notice: "Password was successfully updated."
+  registration:
+#    user_creation_fail_notice: "User creation failed! Please, contact to support."
+    user_activation_create_notice: "Please, activate your account via email."
+    user_activation_success_notice: "User was successfully activated."
+    user_activation_fail_notice: "Activation failed! Please, contact to support."
+  authentication:
+    sign_in_failed: "Signing in failed"
+    sign_in_succeed: "Signing in successful"
+    signed_out: "Signed out!"
+  requests:
+    not_authenticated: "Please, sign in first"
+#    please_proceed: "Please, proceed"
+    please: "Please"
+    enter_email: "Enter your email"
+  questions:
+    new_user: "New user?"
+    forgot_password: "Forgot password?"
+    already_registered: "Already registered?"
+  user_mailer:
+    activation_needed_email:
+      greeting: 'Welcome to PassKeep application!'
+      body: "To finish registration, just follow this link: %{url}"
+      bye: "Thanks for joining and have a great day!"
+      subject: "Please, activate your account"
+    activation_success_email:
+      greeting: 'You have successfully activated your PassKeep account!'
+      body: "To login to the site, just follow this link: %{url}"
+      bye: "Thanks for joining and have a great day!"
+      subject: "Your account is now activated"
+    reset_password_email:
+      greeting: 'Hello, you have requested to reset password for your PassKeep account.'
+      body: "To choose a new password, just follow this link: %{url}"
+      bye: "See ya!"
+      subject: "Your password has been reset"

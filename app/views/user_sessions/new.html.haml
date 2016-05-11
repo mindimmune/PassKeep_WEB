@@ -1,11 +1,22 @@
-%form
-  %fieldset
-    .form-group
-      %input.form-control{:autofocus => "", :name => "email", :placeholder => "#{t(:email)}", :type => "email"}/
-    .form-group
-      %input.form-control{:name => "password", :placeholder => "#{t(:password)}", :type => "password", :value => ""}/
-    .checkbox
-      %label
-        %input{:name => "remember", :type => "checkbox", :value => "#{t(:remember_me)}"}>/
-        = t(:remember_me)
-    %a.btn.btn-lg.btn-success.btn-block{:href => "index.html"}= t(:log_in_button)
+= provide(:title, t('buttons.sign_in_button'))
+
+.login-panel.panel.panel-default
+  .panel-heading
+    %h3.panel-title= "#{t('requests.please')}, #{t('buttons.sign_in_button')}"
+  .panel-body
+    = form_tag user_sessions_path do
+      %fieldset.m-b
+        .form-group
+          = email_field_tag :email, nil, placeholder: t('labels.email'), class: "form-control"
+        .form-group
+          = password_field_tag :password, nil, placeholder: t('labels.password'), class: "form-control"
+        .checkbox
+          = label_tag :remember do
+            = check_box_tag :remember, 0, false, class: "checkbox"
+            = t('labels.remember_me')
+        = submit_tag t('buttons.sign_in_button'), class: "btn btn-lg btn-success btn-block"
+      .text-center
+        = link_to t('questions.forgot_password'), new_password_reset_path
+%p.create-account-callout
+  = t('questions.new_user')
+  = link_to t('buttons.create_account_button'), registration_path

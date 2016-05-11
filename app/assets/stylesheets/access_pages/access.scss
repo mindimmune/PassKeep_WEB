@@ -1,7 +1,18 @@
 body {
-    background-color: #f8f8f8;
+  background-color: #f8f8f8;
 }
 
 .login-panel {
-    margin-top: 25%;
+  margin-top: 25%;
+}
+
+.access-page-alerts-block{
+  height: 51px
+}
+
+.create-account-callout{
+  padding: 15px 20px;
+  text-align: center;
+  border: 1px solid #d8dee2;
+  border-radius: 5px;
 }

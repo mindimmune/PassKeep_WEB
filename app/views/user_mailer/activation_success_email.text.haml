@@ -1,10 +1,5 @@
-:plain
-  Congratz, @user.email
-  ===============================================
+= t('.greeting')
 
-  You have successfully activated your example.com account,
-  your username is: @user.email.
+= t('.body', url: @url)
 
-  To login to the site, just follow this link: @url.
-
-  Thanks for joining and have a great day!
+= t('.bye')

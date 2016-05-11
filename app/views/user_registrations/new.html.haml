@@ -1,9 +1,19 @@
-%form
-  %fieldset
-    .form-group
-      %input.form-control{:autofocus => "", :name => "email", :placeholder => "#{t(:email)}", :type => "email"}/
-    .form-group
-      %input.form-control{:name => "password", :placeholder => "#{t(:password)}", :type => "password", :value => ""}/
-    .form-group
-      %input.form-control{:name => "password_confirmation", :placeholder => "#{t(:confirm_password)}", :type => "password", :value => ""}/
-    %a.btn.btn-lg.btn-success.btn-block{:href => "index.html"}= t(:sign_up_button)
+= provide(:title, t('buttons.sign_up_button'))
+
+.login-panel.panel.panel-default
+  .panel-heading
+    %h3.panel-title= "#{t('requests.please')}, #{t('buttons.sign_up_button')}"
+  .panel-body
+    = form_for @user, url: user_registrations_path do |f|
+      %fieldset.m-b
+        .form-group
+          = f.email_field :email, placeholder: t('labels.email'), class: "form-control"
+        .form-group
+          = f.password_field :password, placeholder: t('labels.password'), class: "form-control"
+        .form-group
+          = f.password_field :password_confirmation, class: "form-control",
+            placeholder: t('labels.confirm_password')
+        = f.submit t('buttons.create_account_button'), class: "btn btn-lg btn-success btn-block"
+%p.create-account-callout
+  = t('questions.already_registered')
+  = link_to t('buttons.sign_in_button'), signin_path

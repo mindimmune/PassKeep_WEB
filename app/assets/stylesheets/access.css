@@ -11,5 +11,6 @@
  * file per style scope.
  *
  *= require_self
- *= require access_pages/common
+ *= require access_pages/access_pages_imports
+ *= require common
  */

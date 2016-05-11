@@ -2,14 +2,18 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  root 'static_pages#home'
+  root 'dashboard#index'
 
-  resources :user_sessions
-  resources :user_registrations
+  resources :user_sessions, only: [:new, :create, :destroy]
+  resources :user_registrations do
+    member do
+      get :activate
+    end
+  end
   resources :password_resets
 
-  get 'login' => 'user_sessions#new', :as => :login
-  post 'logout' => 'user_sessions#destroy', :as => :logout
+  get 'signin' => 'user_sessions#new', :as => :signin
+  get 'signout' => 'user_sessions#destroy', :as => :signout
 
   get 'registration' => 'user_registrations#new', :as => :registration
   post 'create_user' => 'user_registrations#create', :as => :create_user

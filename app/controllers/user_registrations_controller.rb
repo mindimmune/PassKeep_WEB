@@ -1,14 +1,16 @@
 class UserRegistrationsController < ApplicationController
   layout "access_pages"
-  #skip_before_filter :require_login, :only => [:index, :new, :create, :activate]
+
+  skip_before_filter :require_login, :only => [:new, :create, :activate]
 
   def activate
     if (@user = User.load_from_activation_token(params[:id]))
       @user.activate!
-      redirect_to(login_path, :notice => t(:user_activation_success_notice))
+      flash[:success] = t('registration.user_activation_success_notice')
     else
-      not_authenticated
+      flash[:danger] = t('registration.user_activation_fail_notice')
     end
+    redirect_to signin_path
   end
 
   def new
@@ -19,9 +21,10 @@ class UserRegistrationsController < ApplicationController
     @user = User.create(user_params)
 
     if @user.persisted?
-      flash[:info] = t(:user_activation_create_notice)
-      redirect_to(root_path)
+      flash[:info] = t('registration.user_activation_create_notice')
+      redirect_to(signin_path)
     else
+      flash.now[:danger] = @user.errors.full_messages.to_sentence
       render action: :new
     end
   end
