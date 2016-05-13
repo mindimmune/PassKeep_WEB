@@ -1,5 +1,10 @@
 $sidebar-width: 250px;
 
+//page
+html,body,#global-wrapper{
+  height: 100%;
+}
+
 #content-wrapper{
   border-left: 1px solid #e7e7e7;
   display: flex;
@@ -14,10 +19,27 @@ $sidebar-width: 250px;
   width: calc(100% - $sidebar-width)
 }
 
+//sidebar
 .sidebar .sidebar-nav.navbar-collapse {
   padding-right: 0;
   padding-left: 0;
   width: 100%
+}
+
+.sidebar .sidebar-search {
+  padding: 15px;
+}
+
+.sidebar ul li {
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.sidebar ul li a {
+  text-align: center;
+}
+
+.sidebar ul li a.active {
+  background-color: #eee;
 }
 
 //navbar
@@ -29,10 +51,6 @@ $sidebar-width: 250px;
 
 .navbar{
   margin-bottom: 0;
-}
-
-html,body,#global-wrapper{
-  height: 100%;
 }
 
 .navbar-top-links {
@@ -72,6 +90,32 @@ html,body,#global-wrapper{
 .navbar-top-links .dropdown-user {
   right: auto;
   left: 0;
+}
+
+//notes(dashboard#index)
+#btn-add-note{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 10%;
+  right: 10%;
+  background-color: #337ab7;
+  border: 6px solid #cfdcec;
+  box-shadow: 0 0 3px gray;
+}
+
+#btn-add-note:after {
+  content: "\2b";
+  font-size: 80px;
+  color: #F8F8F8;
+  line-height: 90%;
+}
+
+#btn-add-note:focus { outline: 0 !important; }
+
+#btn-add-note:hover {
+  background:#30588e;
 }
 
 @media (min-width: 768px){
