@@ -3,11 +3,11 @@
     %ul#side-menu.nav.in
       %li.sidebar-search
         .input-group.custom-search-form
-          %input.form-control{:placeholder => "Search...", :type => "text"}/
+          %input.form-control{:placeholder => "Search...", :type => "text"}
           %span.input-group-btn
             %button.btn.btn-default{:type => "button"}
               %i.fa.fa-search
       %li
-        %a{:href => "#"}
+        %a{:href => "#notes-list"}
           %i.glyphicon.glyphicon-list
-          My security notes
+          = t('sidebar.security_note_list')

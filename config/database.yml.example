@@ -1,8 +1,9 @@
 default: &default
   adapter: postgresql
-  encoding: unicode
-  username: <%= ENV['POSTGRES_USERNAME'] %>
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  encoding: utf8
+  host: localhost
+  username: "<%= ENV['POSTGRES_USERNAME'] %>"
+  password: "<%= ENV['POSTGRES_PASSWORD'] %>"
   pool: 5
 
 development:
@@ -14,6 +15,5 @@ test:
   database: PassKeep_test
 
 production:
-  production:
   encoding: utf8
   pool: 15

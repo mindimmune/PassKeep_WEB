@@ -13,3 +13,4 @@ $(window).on "load resize", ->
     height = 1
   if height > topOffset
     $('#page-content').css 'min-height', height + 'px'
+

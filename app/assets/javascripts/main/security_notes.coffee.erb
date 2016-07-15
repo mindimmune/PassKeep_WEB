@@ -1,0 +1,33 @@
+$(document).ready ->
+  new Clipboard('.copy-btn',
+    text: (trigger) ->
+      $(trigger).closest('tr').find('.note-val').val()
+  )
+
+angular.module('pass_keep', ['ngRoute', 'templates'])
+.controller('securityNotesListController',
+  ($scope, $http)->
+    $http.get('<%= Rails.application.routes.url_helpers.test_path %>').then (response) ->
+      $scope.notes = JSON.stringify(response.data)
+).controller('securityNotesController',
+  ($scope, $http)->
+    $scope.newNote = ->
+      $http.get('<%= Rails.application.routes.url_helpers.new_security_note_path %>').then (response) ->
+        $scope.note = response.data
+        angular.forEach $scope.note.values, (value, key)->
+          $scope.note.values[key].valType = if value.hidden then "password" else "text"
+    $scope.changeValueType = (note)->
+      note.valType = if note.hidden then "password" else "text"
+    $scope.submit = ->
+      debugger
+      $http.post('<%= Rails.application.routes.url_helpers.security_notes_path %>', $scope.note)
+        .then (response) ->
+          debugger
+).config ($routeProvider)->
+  $routeProvider.when("/notes-list",
+    {
+      templateUrl: "views/notes-list.html",
+      controller: "securityNotesListController",
+      controllerAs: "securNotesListCtrl"
+    }
+  );

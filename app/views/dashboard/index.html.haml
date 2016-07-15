@@ -1,1 +1,9 @@
-%button.btn.btn-default.btn-lg#btn-add-note
+#notes-modal-area{"ng-controller" => "securityNotesController as notesCtrl"}
+  %button.btn.btn-default.btn-lg#btn-add-note{"data-target" => "#noteModalForm",
+                                              "data-toggle" => "modal",
+                                              :type => "button",
+                                              "ng-click" => "newNote()"}
+  = render "security_notes/modal_form"
+
+:plain
+  <ng-view></ng-view>

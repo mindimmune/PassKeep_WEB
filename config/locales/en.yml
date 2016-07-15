@@ -27,11 +27,15 @@ en:
     reset_password: "Reset my password"
     create_account: "Create an account"
     change_password: "Change password"
+    save: "Save"
+    close: "Close"
   labels:
     email: "E-mail"
     password: "Password"
     confirm_password: "Confirm password"
     remember_me: "Remember me"
+    actions: "Actions"
+    copied: "Copied"
   reset_password:
     instructions_notice: "Instructions have been sent to your email."
     success_notice: "Password was successfully updated."
@@ -67,7 +71,18 @@ en:
       bye: "Thanks for joining and have a great day!"
       subject: "Your account is now activated"
     reset_password_email:
-      greeting: 'Hello, you have requested to reset password for your PassKeep account.'
+      greeting: "Hello, you have requested to reset password for your PassKeep account."
       body: "To choose a new password, just follow this link: %{url}"
       bye: "See ya!"
       subject: "Your password has been reset"
+  sidebar:
+    security_note_list: "My security notes"
+  security_notes:
+    title: "Title"
+  security_note_values:
+    keys:
+      default_key: "Field title"
+      default_value: "Field value"
+      hidden: "Hidden value"
+      password: "Password"
+      user_name: "User Name"

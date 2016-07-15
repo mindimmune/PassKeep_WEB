@@ -11,10 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425102148) do
+ActiveRecord::Schema.define(version: 20160526120046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "security_note_values", force: :cascade do |t|
+    t.integer  "security_note_id"
+    t.string   "key",              limit: 30
+    t.string   "value",            limit: 255
+    t.boolean  "hidden",                       default: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
+  add_index "security_note_values", ["security_note_id"], name: "index_security_note_values_on_security_note_id", using: :btree
+
+  create_table "security_notes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title",      limit: 20
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "security_notes", ["user_id"], name: "index_security_notes_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                                       null: false
@@ -41,4 +61,6 @@ ActiveRecord::Schema.define(version: 20160425102148) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", using: :btree
 
+  add_foreign_key "security_note_values", "security_notes"
+  add_foreign_key "security_notes", "users"
 end

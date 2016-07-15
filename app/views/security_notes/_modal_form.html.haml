@@ -1,0 +1,50 @@
+#noteModalForm.modal.fade
+  .modal-dialog
+    .modal-content
+      %form.form-horizontal{"ng-submit": "submit()"}
+        .modal-header
+          %button.close{"data-dismiss" => "modal", :type => "button"}
+            %span ×
+          %h4.modal-title Modal title
+        .modal-body
+          .form-group
+            %label.col-sm-2.control-label{for: "note-title"}
+              = t('security_notes.title')
+            .col-sm-10
+              %input.form-control{placeholder: "#{t('security_notes.title')}",
+                                  "ng-model": "note.title",
+                                  id: "note-title"}
+          .table-responsive
+            %table.table
+              %thead
+                %tr
+                  %th
+                    = t('security_note_values.keys.default_key')
+                  %th
+                    = t('security_note_values.keys.default_value')
+                  %th
+                    = t('security_note_values.keys.hidden')
+                  %th
+                    = t('labels.actions')
+              %tbody
+                %tr{"ng-repeat" => "noteVal in note.values"}
+                  %td
+                    %input.form-control{placeholder: "#{t('security_note_values.keys.default_key')}",
+                                        "ng-model": "noteVal.key",
+                                        type: "text"}
+                  %td
+                    %input.form-control.note-val{placeholder: "#{t('security_note_values.keys.default_value')}",
+                                                 "ng-model": "noteVal.value",
+                                                 type: "{{noteVal.valType}}"}
+                  %td.w-30
+                    %input{type: "checkbox",
+                           "ng-model": "noteVal.hidden",
+                           "ng-true-value": "true",
+                           "ng-false-value": "false",
+                           "ng-change": "changeValueType(noteVal)"}
+                  %td
+                    %button.btn.btn-default.btn-md.copy-btn{type: "button"}
+                      %i.glyphicon.glyphicon-copy
+        .modal-footer
+          %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"}= t("buttons.close")
+          %button.btn.btn-primary{:type => "submit"}= t("buttons.save")

@@ -1,7 +1,7 @@
 class UserSessionsController < ApplicationController
   layout "access_pages"
 
-  skip_before_action :require_login, except: [:destroy]
+  skip_before_action :require_login
 
   def new
     @user = User.new

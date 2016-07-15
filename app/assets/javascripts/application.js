@@ -15,5 +15,9 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require angular
+//= require angular-rails-templates
+//= require_tree ../angularjs
 //= require metismenu
 //= require main/site_scripts
+//= require main/security_notes
+//= require clipboard

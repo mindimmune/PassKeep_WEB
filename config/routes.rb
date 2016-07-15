@@ -11,12 +11,15 @@ Rails.application.routes.draw do
     end
   end
   resources :password_resets
+  resources :security_notes
 
   get 'signin' => 'user_sessions#new', :as => :signin
   get 'signout' => 'user_sessions#destroy', :as => :signout
 
   get 'registration' => 'user_registrations#new', :as => :registration
   post 'create_user' => 'user_registrations#create', :as => :create_user
+
+  get 'test' => 'security_notes#index', :as => :test
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
