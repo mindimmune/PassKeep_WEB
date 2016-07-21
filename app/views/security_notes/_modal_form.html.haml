@@ -1,19 +1,22 @@
 #noteModalForm.modal.fade
   .modal-dialog
     .modal-content
-      %form.form-horizontal{"ng-submit": "submit()"}
+      %form.form-horizontal{"ng-submit": "submit()", name: "noteForm", novalidate: "", autocomplete: "off"}
         .modal-header
           %button.close{"data-dismiss" => "modal", :type => "button"}
             %span ×
           %h4.modal-title Modal title
         .modal-body
-          .form-group
+          .form-group{"ng-class": "{'has-error has-feedback': submitted && hasError('noteTitle', 'required')}"}
             %label.col-sm-2.control-label{for: "note-title"}
               = t('security_notes.title')
             .col-sm-10
               %input.form-control{placeholder: "#{t('security_notes.title')}",
                                   "ng-model": "note.title",
-                                  id: "note-title"}
+                                  id: "note-title",
+                                  required: "",
+                                  name: "noteTitle"}
+              %span.glyphicon.glyphicon-remove.form-control-feedback{"ng-show": "submitted && hasError('noteTitle', 'required')"}
           .table-responsive
             %table.table
               %thead
@@ -29,13 +32,27 @@
               %tbody
                 %tr{"ng-repeat" => "noteVal in note.values"}
                   %td
-                    %input.form-control{placeholder: "#{t('security_note_values.keys.default_key')}",
-                                        "ng-model": "noteVal.key",
-                                        type: "text"}
+                    %div{"ng-class": "{'has-error has-feedback': submitted && hasError('noteKey{{$index}}', 'required')}"}
+                      .col-md-12
+                        %input.form-control{placeholder: "#{t('security_note_values.keys.default_key')}",
+                                            "ng-model": "noteVal.key",
+                                            type: "text",
+                                            required: "",
+                                            name: "noteKey{{$index}}"}
+                        %span.glyphicon.glyphicon-remove.form-control-feedback{"ng-show": |
+                          "submitted && hasError('noteKey{{$index}}', 'required')"}       |
                   %td
-                    %input.form-control.note-val{placeholder: "#{t('security_note_values.keys.default_value')}",
-                                                 "ng-model": "noteVal.value",
-                                                 type: "{{noteVal.valType}}"}
+                    %div{"ng-class": "{'has-error has-feedback': submitted && hasError('noteVal{{$index}}', 'required')}"}
+                      .col-md-12
+                        %input{type: "text", name: "preventAutoPass", id: "preventAutoPass", style: "display:none"}
+                        %input.form-control.note-val{placeholder: "#{t('security_note_values.keys.default_value')}",
+                                                     "ng-model": "noteVal.value",
+                                                     type: "{{noteVal.valType}}",
+                                                     required: "",
+                                                     name: "noteVal{{$index}}",
+                                                     autocomplete: "off"}
+                        %span.glyphicon.glyphicon-remove.form-control-feedback{"ng-show": |
+                          "submitted && hasError('noteVal{{$index}}', 'required')"}       |
                   %td.w-30
                     %input{type: "checkbox",
                            "ng-model": "noteVal.hidden",
@@ -47,4 +64,4 @@
                       %i.glyphicon.glyphicon-copy
         .modal-footer
           %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"}= t("buttons.close")
-          %button.btn.btn-primary{:type => "submit"}= t("buttons.save")
+          %button.btn.btn-primary{:type => "submit", "ng-blur": "submitted = false"}= t("buttons.save")

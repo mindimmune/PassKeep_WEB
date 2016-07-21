@@ -14,3 +14,6 @@ $(window).on "load resize", ->
   if height > topOffset
     $('#page-content').css 'min-height', height + 'px'
 
+$ ->
+  $('#notes-list-lnk').tooltip
+    trigger: 'manual'

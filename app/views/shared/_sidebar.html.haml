@@ -7,7 +7,7 @@
           %span.input-group-btn
             %button.btn.btn-default{:type => "button"}
               %i.fa.fa-search
-      %li
+      %li{"data-toggle": "tooltip", "data-placement": "right", id: "notes-list-lnk"}
         %a{:href => "#notes-list"}
           %i.glyphicon.glyphicon-list
           = t('sidebar.security_note_list')

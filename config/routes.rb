@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get 'registration' => 'user_registrations#new', :as => :registration
   post 'create_user' => 'user_registrations#create', :as => :create_user
 
-  get 'test' => 'security_notes#index', :as => :test
+  get 'test' => 'security_notes#list', :as => :security_notes_list
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

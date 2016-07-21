@@ -19,10 +19,25 @@ angular.module('pass_keep', ['ngRoute', 'templates'])
     $scope.changeValueType = (note)->
       note.valType = if note.hidden then "password" else "text"
     $scope.submit = ->
-      debugger
-      $http.post('<%= Rails.application.routes.url_helpers.security_notes_path %>', $scope.note)
-        .then (response) ->
-          debugger
+      $scope.submitted = true;
+      if $scope.noteForm.$valid
+        $http.post('<%= Rails.application.routes.url_helpers.security_notes_path %>', {security_note: $scope.note})
+          .then (response) ->
+            if response.data.success
+              $('#noteModalForm').modal('hide')
+              $('#notes-list-lnk')
+                .prop('title', '<%= I18n.t("sidebar.note_added")%>')
+                .tooltip('fixTitle')
+                .tooltip('show')
+              setTimeout (->
+                $('#notes-list-lnk').tooltip('hide')
+              ), 3000
+    $scope.hasError = (field, validation) ->
+      if validation
+        return $scope.noteForm[field].$dirty and $scope.noteForm[field].$error[validation] or
+          $scope.submitted and $scope.noteForm[field].$error[validation]
+      $scope.noteForm[field].$dirty and $scope.noteForm[field].$invalid or
+        $scope.submitted and $scope.noteForm[field].$invalid
 ).config ($routeProvider)->
   $routeProvider.when("/notes-list",
     {

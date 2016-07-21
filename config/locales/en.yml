@@ -76,6 +76,7 @@ en:
       bye: "See ya!"
       subject: "Your password has been reset"
   sidebar:
+    note_added: "New security note added"
     security_note_list: "My security notes"
   security_notes:
     title: "Title"
