@@ -1,0 +1,7 @@
+.notes-list-line{"ng-repeat": "notesChunk in notes"}
+  .col-md-2.note-element{"ng-repeat": "note in notesChunk track by note.id"}
+    .well.note-well.text-center{"ng-click": "editNote(note.id)"}
+      %strong
+        {{note.title}}
+    %button.close.delete-note-cross-btn{:type => "button", "ng-click": "deleteNote(note.id)"}
+      %span ×

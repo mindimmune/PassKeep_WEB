@@ -10,10 +10,10 @@ class SiteSecurity::Cryptor
   end
 
   def encrypt_value(value)
-    cryptor.encrypt_and_sign(value)
+    @cryptor.encrypt_and_sign(value)
   end
 
   def decrypt_value(value)
-    cryptor.decrypt_and_verify(value)
+    @cryptor.decrypt_and_verify(value)
   end
 end

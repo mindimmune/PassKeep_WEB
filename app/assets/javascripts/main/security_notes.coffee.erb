@@ -2,42 +2,114 @@ $(document).ready ->
   new Clipboard('.copy-btn',
     text: (trigger) ->
       $(trigger).closest('tr').find('.note-val').val()
+
+      $(trigger)
+          .prop('title', "<%= I18n.t('labels.copied')%>")
+          .tooltip('fixTitle')
+          .tooltip('setContent')
+          .tooltip('show')
+
+      setTimeout (->
+          $(trigger).prop('title', "<%= I18n.t('labels.copy')%>")
+            .tooltip('fixTitle')
+            .tooltip('setContent')
+            .tooltip('show')
+        ), 1000
   )
 
 angular.module('pass_keep', ['ngRoute', 'templates'])
 .controller('securityNotesListController',
-  ($scope, $http)->
-    $http.get('<%= Rails.application.routes.url_helpers.test_path %>').then (response) ->
-      $scope.notes = JSON.stringify(response.data)
+  ($rootScope, $scope, $http)->
+    handleNoteChange = (response, tooltipText)->
+      if response.data.success
+        $('#noteModalForm').modal('hide')
+
+        $('#notes-list-lnk')
+          .prop('title', tooltipText)
+          .tooltip('fixTitle')
+          .tooltip('show')
+
+        setTimeout (->
+          $('#notes-list-lnk').tooltip('hide')
+        ), 3000
+
+        updateNotesList()
+
+    updateNotesList = ->
+      $http.get('<%= Rails.application.routes.url_helpers.security_notes_list_path %>').then (response) ->
+        $scope.notes = response.data
+
+    $scope.editNote = (noteId)->
+      $rootScope.$emit 'noteClicked', noteId
+
+    $scope.deleteNote = (noteId)->
+      if confirm("<%= I18n.t('questions.delete_note')%>")
+        delete_path = '<%= Rails.application.routes.url_helpers.security_note_path(0) %>'.replace('0', noteId)
+        $http.delete(delete_path)
+          .then (response) ->
+            handleNoteChange response, '<%= I18n.t("sidebar.note_deleted")%>'
+
+    $rootScope.$on 'noteChanged', (event, data) ->
+      handleNoteChange data.response, data.message
+
+    updateNotesList()
+
 ).controller('securityNotesController',
-  ($scope, $http)->
+  ($rootScope, $scope, $http)->
+    setScopeNote = (noteData)->
+      $scope.note = noteData
+
+      angular.forEach $scope.note.values_attributes, (value, key)->
+        $scope.note.values_attributes[key].valType = if value.hidden then "password" else "text"
+
+    $rootScope.$on 'noteClicked', (event, data) ->
+      edit_path = '<%= Rails.application.routes.url_helpers.edit_security_note_path(0) %>'.replace('0', data)
+
+      $http.get(edit_path).then (response) ->
+        setScopeNote response.data
+
+      $('#noteModalForm').modal('show')
+
     $scope.newNote = ->
       $http.get('<%= Rails.application.routes.url_helpers.new_security_note_path %>').then (response) ->
-        $scope.note = response.data
-        angular.forEach $scope.note.values, (value, key)->
-          $scope.note.values[key].valType = if value.hidden then "password" else "text"
+        setScopeNote response.data
+
     $scope.changeValueType = (note)->
       note.valType = if note.hidden then "password" else "text"
+
     $scope.submit = ->
       $scope.submitted = true;
+
       if $scope.noteForm.$valid
-        $http.post('<%= Rails.application.routes.url_helpers.security_notes_path %>', {security_note: $scope.note})
-          .then (response) ->
-            if response.data.success
-              $('#noteModalForm').modal('hide')
-              $('#notes-list-lnk')
-                .prop('title', '<%= I18n.t("sidebar.note_added")%>')
-                .tooltip('fixTitle')
-                .tooltip('show')
-              setTimeout (->
-                $('#notes-list-lnk').tooltip('hide')
-              ), 3000
+        if $scope.note.id == null
+          $http.post('<%= Rails.application.routes.url_helpers.security_notes_path %>', {security_note: $scope.note})
+            .then (response) ->
+              $rootScope.$emit 'noteChanged', {response: response, message: '<%= I18n.t("sidebar.note_added")%>'}
+        else
+          update_path = '<%= Rails.application.routes.url_helpers.security_note_path(0) %>'.replace('0', $scope.note.id)
+          $http.patch(update_path, {security_note: $scope.note})
+            .then (response) ->
+              $rootScope.$emit 'noteChanged', {response: response, message: '<%= I18n.t("sidebar.note_edited")%>'}
+
     $scope.hasError = (field, validation) ->
       if validation
         return $scope.noteForm[field].$dirty and $scope.noteForm[field].$error[validation] or
           $scope.submitted and $scope.noteForm[field].$error[validation]
+
       $scope.noteForm[field].$dirty and $scope.noteForm[field].$invalid or
         $scope.submitted and $scope.noteForm[field].$invalid
+
+).directive('afterElementsGenerated', ->
+  (scope, element, attrs) ->
+    if scope.$last
+      $(element).closest('table').find('.delete-note-val-btn').tooltip()
+      $(element).closest('table').find('.copy-btn').tooltip()
+      noteVal = $(element).closest('table').find('.note-val')
+      noteVal.attr('readonly', true)
+      noteVal.focus ->
+        $(@).removeAttr 'readonly'
+      noteVal.blur ->
+        $(@).attr 'readonly', true
 ).config ($routeProvider)->
   $routeProvider.when("/notes-list",
     {

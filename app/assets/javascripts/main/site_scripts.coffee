@@ -17,3 +17,5 @@ $(window).on "load resize", ->
 $ ->
   $('#notes-list-lnk').tooltip
     trigger: 'manual'
+
+  $('.add-note-val-btn').tooltip()

@@ -29,6 +29,8 @@ en:
     change_password: "Change password"
     save: "Save"
     close: "Close"
+    delete_note_val: "Delete this note value"
+    add_note_val: "Add new note value"
   labels:
     email: "E-mail"
     password: "Password"
@@ -36,12 +38,13 @@ en:
     remember_me: "Remember me"
     actions: "Actions"
     copied: "Copied"
+    copy: "Copy"
+    title: "Title"
   reset_password:
     instructions_notice: "Instructions have been sent to your email."
     success_notice: "Password was successfully updated."
     wrong_token: "Incorrect token!"
   registration:
-#    user_creation_fail_notice: "User creation failed! Please, contact to support."
     user_activation_create_notice: "Please, activate your account via email."
     user_activation_success_notice: "User was successfully activated."
     user_activation_fail_notice: "Activation failed! Please, contact to support."
@@ -51,7 +54,6 @@ en:
     signed_out: "Signed out!"
   requests:
     not_authenticated: "Please, sign in first"
-#    please_proceed: "Please, proceed"
     please: "Please"
     enter_email: "Enter your email"
     choose_new_password: "Choose new password"
@@ -59,6 +61,7 @@ en:
     new_user: "New user?"
     forgot_password: "Forgot password?"
     already_registered: "Already registered?"
+    delete_note: "Are you sure you want to delete this note?"
   user_mailer:
     activation_needed_email:
       greeting: 'Welcome to PassKeep application!'
@@ -77,9 +80,9 @@ en:
       subject: "Your password has been reset"
   sidebar:
     note_added: "New security note added"
+    note_edited: "Security note updated"
+    note_deleted: "Security note deleted"
     security_note_list: "My security notes"
-  security_notes:
-    title: "Title"
   security_note_values:
     keys:
       default_key: "Field title"
