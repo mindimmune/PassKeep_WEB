@@ -99,6 +99,21 @@ angular.module('pass_keep', ['ngRoute', 'templates'])
       $scope.noteForm[field].$dirty and $scope.noteForm[field].$invalid or
         $scope.submitted and $scope.noteForm[field].$invalid
 
+    $scope.deleteNoteVal = (noteVal) ->
+      $scope.note.values_attributes.splice $scope.note.values_attributes.indexOf(noteVal), 1
+
+    $scope.addNoteVal = ->
+      $scope.note.values_attributes.push
+        id: null
+        key: null
+        value: null
+        hidden: false
+        valType: "text"
+        order: Math.max.apply(Math, $scope.note.values_attributes.map((o) ->
+          o.order
+        )) + 1
+      $('.add-note-val-btn').blur()
+
 ).directive('afterElementsGenerated', ->
   (scope, element, attrs) ->
     if scope.$last

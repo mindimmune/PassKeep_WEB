@@ -18,20 +18,22 @@ ActiveRecord::Schema.define(version: 20160526120046) do
 
   create_table "security_note_values", force: :cascade do |t|
     t.integer  "security_note_id"
-    t.string   "key",              limit: 30
-    t.string   "value",            limit: 255
-    t.boolean  "hidden",                       default: false
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.string   "key"
+    t.text     "value"
+    t.boolean  "hidden",           default: false
+    t.integer  "order"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   add_index "security_note_values", ["security_note_id"], name: "index_security_note_values_on_security_note_id", using: :btree
 
   create_table "security_notes", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title",      limit: 20
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.string   "title"
+    t.integer  "order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "security_notes", ["user_id"], name: "index_security_notes_on_user_id", using: :btree

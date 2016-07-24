@@ -7,13 +7,13 @@
     = form_for @user, url: user_registrations_path do |f|
       %fieldset.m-b
         .form-group
-          = f.email_field :email, placeholder: t('labels.email'), class: "form-control"
+          = f.email_field :email, placeholder: t('labels.email'), class: 'form-control'
         .form-group
-          = f.password_field :password, placeholder: t('labels.password'), class: "form-control"
+          = f.password_field :password, placeholder: t('labels.password'), class: 'form-control'
         .form-group
-          = f.password_field :password_confirmation, class: "form-control",
+          = f.password_field :password_confirmation, class: 'form-control',
             placeholder: t('labels.confirm_password')
-        = f.submit t('buttons.create_account'), class: "btn btn-lg btn-success btn-block"
+        = f.submit t('buttons.create_account'), class: 'btn btn-lg btn-success btn-block'
 %p.create-account-callout
   = t('questions.already_registered')
   = link_to t('buttons.sign_in'), signin_path

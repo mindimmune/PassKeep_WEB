@@ -8,8 +8,8 @@
     = form_for @user, url: password_reset_path(@token), html: {method: :put} do |f|
       %fieldset.m-b
         .form-group
-          = f.password_field :password, placeholder: t('labels.password'), class: "form-control"
+          = f.password_field :password, placeholder: t('labels.password'), class: 'form-control'
         .form-group
-          = f.password_field :password_confirmation, class: "form-control",
+          = f.password_field :password_confirmation, class: 'form-control',
             placeholder: t('labels.confirm_password')
-        = f.submit t('buttons.change_password'), class: "btn btn-lg btn-success btn-block"
+        = f.submit t('buttons.change_password'), class: 'btn btn-lg btn-success btn-block'

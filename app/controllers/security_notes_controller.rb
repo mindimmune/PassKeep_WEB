@@ -31,12 +31,12 @@ class SecurityNotesController < ApplicationController
 
   def security_note_params
     params.require(:security_note)
-          .permit(:title, values_attributes: [:id, :key, :value, :hidden])
+          .permit(:title, :order, values_attributes: [:id, :key, :value, :hidden, :order])
           .merge(user_id: current_user.id)
   end
 
   def security_note_json(note)
-    note.to_json(include: {values: {only: [:id, :key, :value, :hidden]}}, only: [:title, :id])
+    note.to_json(include: {values: {only: [:id, :key, :value, :hidden, :order]}}, only: [:title, :id, :order])
         .sub "\"values\":", "\"values_attributes\":"
   end
 end

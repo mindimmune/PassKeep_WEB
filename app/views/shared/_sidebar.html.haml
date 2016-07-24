@@ -1,13 +1,13 @@
 .navbar-default.sidebar
-  .sidebar-nav.navbar-collapse{"aria-expanded": "true"}
+  .sidebar-nav.navbar-collapse
     %ul#side-menu.nav.in
       %li.sidebar-search
         .input-group.custom-search-form
-          %input.form-control{:placeholder => "Search...", :type => "text"}
+          %input.form-control(placeholder="Search..." type="text")
           %span.input-group-btn
-            %button.btn.btn-default{:type => "button"}
+            %button.btn.btn-default(type="button")
               %i.fa.fa-search
-      %li{"data-toggle": "tooltip", "data-placement": "right", id: "notes-list-lnk"}
-        %a{:href => "#notes-list"}
+      %li(data-toggle="tooltip" data-placement="right" id="notes-list-lnk")
+        %a(href="#notes-list")
           %i.glyphicon.glyphicon-list
           = t('sidebar.security_note_list')

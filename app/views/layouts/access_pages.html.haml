@@ -1,15 +1,15 @@
 !!!
-%html{:lang => "en"}
+%html(lang="en")
   %head
     %title= full_title(yield(:title))
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta(content="text/html; charset=UTF-8" http-equiv="Content-Type")
     = stylesheet_link_tag    'access', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'access', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
     .container
       .row.m-t.access-page-alerts-block
-        = render "shared/alert_messages"
+        = render 'shared/alert_messages'
       .row
         .col-md-4.col-md-offset-4
           = yield

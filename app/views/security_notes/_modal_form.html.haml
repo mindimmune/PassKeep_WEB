@@ -1,23 +1,22 @@
 #noteModalForm.modal.fade
   .modal-dialog
     .modal-content
-      %form.form-horizontal{"ng-submit": "submit()", name: "noteForm", novalidate: "", autocomplete: "off"}
+      %form.form-horizontal(ng-submit="submit()" name="noteForm" novalidate autocomplete="off")
         .modal-header
-          %button.close{"data-dismiss" => "modal", :type => "button"}
+          %button.close(data-dismiss="modal" type="button")
             %span ×
           %h4.modal-title Modal title
         .modal-body
-          %input.form-control{"ng-model": "note.id", type: "hidden"}
-          .form-group{"ng-class": "{'has-error has-feedback': submitted && hasError('noteTitle', 'required')}"}
-            %label.col-sm-2.control-label{for: "note-title"}
+          %input.form-control(ng-model="note.id" type="hidden")
+          %input.form-control(ng-model="note.order" type="hidden")
+          .form-group(ng-class="{'has-error has-feedback': submitted && hasError('noteTitle', 'required')}")
+            %label.col-sm-2.control-label(for="note-title")
               = t('labels.title')
             .col-sm-10
-              %input.form-control{placeholder: "#{t('labels.title')}",
-                                  "ng-model": "note.title",
-                                  id: "note-title",
-                                  required: "",
-                                  name: "noteTitle"}
-              %span.glyphicon.glyphicon-remove.form-control-feedback{"ng-show": "submitted && hasError('noteTitle', 'required')"}
+              %input.form-control(placeholder="#{t('labels.title')}" ng-model="note.title" id="note-title" required
+                                  name="noteTitle")
+              %span(ng-show="submitted && hasError('noteTitle', 'required')"
+                    class="glyphicon glyphicon-remove form-control-feedback")
           .table-responsive
             %table.table.note-values-table
               %thead
@@ -28,53 +27,43 @@
                     = t('security_note_values.keys.default_value')
                   %th
                     = t('security_note_values.keys.hidden')
-                  %th{:colspan => 2}
+                  %th(colspan=2)
                     = t('labels.actions')
               %tbody
-                %tr{"ng-repeat" => "noteVal in note.values_attributes", "after-elements-generated": ""}
+                %tr(ng-repeat="noteVal in note.values_attributes" after-elements-generated)
                   %td
-                    %input.form-control{"ng-model": "noteVal.id", type: "hidden"}
-                    %div{"ng-class": "{'has-error has-feedback': submitted && hasError('noteKey{{$index}}', 'required')}"}
+                    %input.form-control(ng-model="noteVal.id" type="hidden")
+                    %input.form-control(ng-model="noteVal.order" type="hidden")
+                    %div(ng-class="{'has-error has-feedback': submitted && hasError('noteKey{{$index}}', 'required')}")
                       .col-md-12
-                        %input.form-control{placeholder: "#{t('security_note_values.keys.default_key')}",
-                                            "ng-model": "noteVal.key",
-                                            type: "text",
-                                            required: "",
-                                            name: "noteKey{{$index}}"}
-                        %span.glyphicon.glyphicon-remove.form-control-feedback{"ng-show": |
-                          "submitted && hasError('noteKey{{$index}}', 'required')"}       |
+                        %input.form-control(placeholder="#{t('security_note_values.keys.default_key')}"
+                                            ng-model="noteVal.key" type="text" required name="noteKey{{$index}}")
+                        %span(ng-show="submitted && hasError('noteKey{{$index}}', 'required')"
+                              class="glyphicon glyphicon-remove form-control-feedback")
                   %td
-                    %div{"ng-class": "{'has-error has-feedback': submitted && hasError('noteVal{{$index}}', 'required')}"}
+                    %div(ng-class="{'has-error has-feedback': submitted && hasError('noteVal{{$index}}', 'required')}")
                       .col-md-12
-                        %input.form-control.note-val{placeholder: "#{t('security_note_values.keys.default_value')}",
-                                                     "ng-model": "noteVal.value",
-                                                     type: "{{noteVal.valType}}",
-                                                     required: "",
-                                                     name: "noteVal{{$index}}"}
-                        %span.glyphicon.glyphicon-remove.form-control-feedback{"ng-show": |
-                          "submitted && hasError('noteVal{{$index}}', 'required')"}       |
+                        %input.form-control.note-val(placeholder="#{t('security_note_values.keys.default_value')}"
+                                                     ng-model="noteVal.value" type="{{noteVal.valType}}"
+                                                     name="noteVal{{$index}}" required)
+                        %span(ng-show="submitted && hasError('noteVal{{$index}}', 'required')"
+                              class="glyphicon glyphicon-remove form-control-feedback")
                   %td.w-30
-                    %input{type: "checkbox",
-                           "ng-model": "noteVal.hidden",
-                           "ng-true-value": "true",
-                           "ng-false-value": "false",
-                           "ng-change": "changeValueType(noteVal)"}
+                    %input(type="checkbox" ng-model="noteVal.hidden" ng-true-value="true" ng-false-value="false"
+                           ng-change="changeValueType(noteVal)")
                   %td
-                    %button.btn.btn-default.btn-md.copy-btn{"data-toggle": "tooltip",
-                                                            "data-placement": "left",
-                                                            type: "button",
-                                                            title: "#{t('labels.copy')}"}
+                    %button.btn.btn-default.btn-md.copy-btn(data-toggle="tooltip" data-placement="left"
+                                                            type="button" title="#{t('labels.copy')}" )
                       %i.glyphicon.glyphicon-copy
-                    %button.btn.btn-default.btn-md.delete-note-val-btn{"data-toggle": "tooltip",
-                                                                       "data-placement": "top",
-                                                                        type: "button",
-                                                                        title: "#{t('buttons.delete_note_val')}"}
+                    %button.btn.btn-default.btn-md.delete-note-val-btn(data-toggle="tooltip" data-placement="top"
+                                                                       type="button"
+                                                                       title="#{t('buttons.delete_note_val')}"
+                                                                       ng-click="deleteNoteVal(noteVal)")
                       %i.glyphicon.glyphicon-minus.delete-note-icon
         .modal-footer
-          %button.btn.btn-default.btn-md.add-note-val-btn{"data-toggle": "tooltip",
-                                                          "data-placement": "right",
-                                                          type: "button",
-                                                          title: "#{t('buttons.add_note_val')}"}
+          %button.btn.btn-default.btn-md.add-note-val-btn(data-toggle= "tooltip" data-placement="right"
+                                                          type="button" title="#{t('buttons.add_note_val')}"
+                                                          ng-click="addNoteVal()")
             %i.glyphicon.glyphicon-plus.add-note-icon
-          %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"}= t("buttons.close")
-          %button.btn.btn-primary{:type => "submit", "ng-blur": "submitted = false"}= t("buttons.save")
+          %button.btn.btn-default(data-dismiss="modal" type="button")= t('buttons.close')
+          %button.btn.btn-primary(type="submit" ng-blur="submitted = false")= t("buttons.save")

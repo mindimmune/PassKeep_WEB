@@ -1,7 +1,7 @@
 .navbar.navbar-default
   .navbar-header
-    %a.navbar-brand{ href: "#" } PASSKEEP
-    %button.navbar-toggle{type: "button", "data-toggle": "collapse", "data-target": ".navbar-collapse"}
+    %a.navbar-brand(href="#{root_path}") PASSKEEP
+    %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-collapse")
       %span.sr-only
         Toggle navigation
       %span.icon-bar
@@ -9,16 +9,16 @@
       %span.icon-bar
   %ul.nav.navbar-top-links.navbar-right
     %li.dropdown
-      %a.dropdown-toggle{"aria-expanded" => "true", "data-toggle" => "dropdown", :href => "#"}
+      %a.dropdown-toggle(data-toggle="dropdown" href="#")
         %i.fa.fa-user.fa-fw
         %i.fa.fa-caret-down
       %ul.dropdown-menu.dropdown-user
         %li
-          %a{:href => "#"}
+          %a(href="#")
             %i.fa.fa-user.fa-fw
             User Profile ???
         %li
-          %a{:href => "#"}
+          %a(href="#")
             %i.fa.fa-gear.fa-fw
             Settings ????
         %li.divider
