@@ -19,83 +19,83 @@ $(document).ready ->
 
 angular.module('pass_keep', ['ngRoute', 'templates'])
 .controller('securityNotesListController',
-  ($rootScope, $scope, $http)->
-    updateNotesList = ->
-      $http.get('<%= Rails.application.routes.url_helpers.security_notes_list_path %>').then (response) ->
-        $scope.notes = response.data
+  ['$rootScope', '$scope', '$http', ($rootScope, $scope, $http)->
+      updateNotesList = ->
+        $http.get('<%= Rails.application.routes.url_helpers.security_notes_list_path %>').then (response) ->
+          $scope.notes = response.data
 
-    $scope.editNote = (noteId)->
-      $rootScope.$emit 'noteClicked', noteId
+      $scope.editNote = (noteId)->
+        $rootScope.$emit 'noteClicked', noteId
 
-    $scope.deleteNote = (noteId)->
-      if confirm("<%= I18n.t('questions.delete_note')%>")
-        delete_path = '<%= Rails.application.routes.url_helpers.security_note_path(0) %>'.replace('0', noteId)
-        $http.delete(delete_path)
-          .then (response) ->
-            $rootScope.$emit 'noteChanged', {response: response, message: '<%= I18n.t("sidebar.note_deleted")%>'}
+      $scope.deleteNote = (noteId)->
+        if confirm("<%= I18n.t('questions.delete_note')%>")
+          delete_path = '<%= Rails.application.routes.url_helpers.security_note_path(0) %>'.replace('0', noteId)
+          $http.delete(delete_path)
+            .then (response) ->
+              $rootScope.$emit 'noteChanged', {response: response, message: '<%= I18n.t("sidebar.note_deleted")%>'}
 
-    updateNotesList()
-
-    $rootScope.$on 'noteListUpdated', (event, data) ->
       updateNotesList()
 
+      $rootScope.$on 'noteListUpdated', (event, data) ->
+        updateNotesList()]
+
 ).controller('securityNotesController',
-  ($rootScope, $scope, $http)->
-    setScopeNote = (noteData)->
-      $scope.note = noteData
-      angular.forEach $scope.note.values_attributes, (value, key)->
-        $scope.note.values_attributes[key].valType = if value.hidden then "password" else "text"
+  ['$rootScope', '$scope', '$http', ($rootScope, $scope, $http)->
+      setScopeNote = (noteData)->
+        $scope.note = noteData
+        angular.forEach $scope.note.values_attributes, (value, key)->
+          $scope.note.values_attributes[key].valType = if value.hidden then "password" else "text"
 
-    $rootScope.$on 'noteClicked', (event, data) ->
-      edit_path = '<%= Rails.application.routes.url_helpers.edit_security_note_path(0) %>'.replace('0', data)
-      $http.get(edit_path).then (response) ->
-        setScopeNote response.data
-      $('#noteModalForm').modal('show')
+      $rootScope.$on 'noteClicked', (event, data) ->
+        edit_path = '<%= Rails.application.routes.url_helpers.edit_security_note_path(0) %>'.replace('0', data)
+        $http.get(edit_path).then (response) ->
+          setScopeNote response.data
+        $('#noteModalForm').modal('show')
 
-    $scope.newNote = ->
-      $http.get('<%= Rails.application.routes.url_helpers.new_security_note_path %>').then (response) ->
-        setScopeNote response.data
+      $scope.newNote = ->
+        $http.get('<%= Rails.application.routes.url_helpers.new_security_note_path %>').then (response) ->
+          setScopeNote response.data
 
-    $scope.changeValueType = (note)->
-      note.valType = if note.hidden then "password" else "text"
+      $scope.changeValueType = (note)->
+        note.valType = if note.hidden then "password" else "text"
 
-    $scope.submit = ->
-      $scope.submitted = true;
+      $scope.submit = ->
+        $scope.submitted = true;
 
-      if $scope.noteForm.$valid
-        if $scope.note.id == null
-          $http.post('<%= Rails.application.routes.url_helpers.security_notes_path %>', {security_note: $scope.note})
-            .then (response) ->
-              $rootScope.$emit 'noteChanged', {response: response, message: '<%= I18n.t("sidebar.note_added")%>'}
-        else
-          update_path = '<%= Rails.application.routes.url_helpers.security_note_path(0) %>'.replace('0', $scope.note.id)
-          $http.patch(update_path, {security_note: $scope.note})
-            .then (response) ->
-              $rootScope.$emit 'noteChanged', {response: response, message: '<%= I18n.t("sidebar.note_edited")%>'}
+        if $scope.noteForm.$valid
+          if $scope.note.id == null
+            $http.post('<%= Rails.application.routes.url_helpers.security_notes_path %>', {security_note: $scope.note})
+              .then (response) ->
+                $rootScope.$emit 'noteChanged', {response: response, message: '<%= I18n.t("sidebar.note_added")%>'}
+          else
+            update_path = '<%= Rails.application.routes.url_helpers.security_note_path(0) %>'.replace('0', $scope.note.id)
+            $http.patch(update_path, {security_note: $scope.note})
+              .then (response) ->
+                $rootScope.$emit 'noteChanged', {response: response, message: '<%= I18n.t("sidebar.note_edited")%>'}
 
-    $scope.hasError = (field, validation) ->
-      if validation
-        return $scope.noteForm[field].$dirty and $scope.noteForm[field].$error[validation] or
-          $scope.submitted and $scope.noteForm[field].$error[validation]
+      $scope.hasError = (field, validation) ->
+        if validation
+          return $scope.noteForm[field].$dirty and $scope.noteForm[field].$error[validation] or
+            $scope.submitted and $scope.noteForm[field].$error[validation]
 
-      $scope.noteForm[field].$dirty and $scope.noteForm[field].$invalid or
-        $scope.submitted and $scope.noteForm[field].$invalid
+        $scope.noteForm[field].$dirty and $scope.noteForm[field].$invalid or
+          $scope.submitted and $scope.noteForm[field].$invalid
 
-    $scope.deleteNoteVal = (noteVal) ->
-      $scope.note.values_attributes.splice $scope.note.values_attributes.indexOf(noteVal), 1
+      $scope.deleteNoteVal = (noteVal) ->
+        $scope.note.values_attributes.splice $scope.note.values_attributes.indexOf(noteVal), 1
 
-    $scope.addNoteVal = ->
-      $scope.note.values_attributes.push
-        id: null
-        key: null
-        value: null
-        hidden: false
-        valType: "text"
-        order: Math.max.apply(Math, $scope.note.values_attributes.map((o) ->
-          o.order
-        )) + 1
-      $('.add-note-val-btn').blur()
-      return false
+      $scope.addNoteVal = ->
+        $scope.note.values_attributes.push
+          id: null
+          key: null
+          value: null
+          hidden: false
+          valType: "text"
+          order: Math.max.apply(Math, $scope.note.values_attributes.map((o) ->
+            o.order
+          )) + 1
+        $('.add-note-val-btn').blur()
+        return false]
 
 ).directive('afterElementsGenerated', ->
   (scope, element, attrs) ->
@@ -109,7 +109,7 @@ angular.module('pass_keep', ['ngRoute', 'templates'])
       noteVal.blur ->
         $(@).attr 'readonly', true
 
-).config(($routeProvider) ->
+).config(['$routeProvider', ($routeProvider) ->
     $routeProvider.when('/notes-list',
       templateUrl: "views/notes-list.html",
       controller: "securityNotesListController",
@@ -117,9 +117,9 @@ angular.module('pass_keep', ['ngRoute', 'templates'])
       .when('/',
         template: '')
       .otherwise
-        template: ''
+        template: '']
 
-).run ($rootScope)->
+).run ['$rootScope', ($rootScope)->
   handleNoteChange = (response, tooltipText)->
     if response.data.success
       $('#noteModalForm').modal('hide')
@@ -136,4 +136,7 @@ angular.module('pass_keep', ['ngRoute', 'templates'])
       $rootScope.$emit 'noteListUpdated'
 
   $rootScope.$on 'noteChanged', (event, data) ->
-    handleNoteChange data.response, data.message
+    handleNoteChange data.response, data.message]
+
+$(document).on 'ready page:load', ->
+  angular.bootstrap document.body, [ 'pass_keep' ]
