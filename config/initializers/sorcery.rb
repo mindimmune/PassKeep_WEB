@@ -251,7 +251,7 @@ Rails.application.config.sorcery.configure do |config|
     # How long in seconds the session length will be
     # Default: `604800`
     #
-    # user.remember_me_for =
+    user.remember_me_for = 600
 
 
     # -- user_activation --
@@ -282,7 +282,7 @@ Rails.application.config.sorcery.configure do |config|
     # your mailer class. Required.
     # Default: `nil`
     #
-     user.user_activation_mailer = UserMailer
+    user.user_activation_mailer = UserMailer
 
 
     # when true sorcery will not automatically

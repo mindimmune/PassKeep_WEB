@@ -107,9 +107,8 @@ html,body,#global-wrapper{
 
   &:after {
     content: "\2b";
-    font-size: 80px;
+    font: 80px/70% normal Verdana,Georgia;
     color: #F8F8F8;
-    line-height: 90%;
   }
 
   &:focus { outline: 0 !important; }

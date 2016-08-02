@@ -20,21 +20,6 @@ $(document).ready ->
 angular.module('pass_keep', ['ngRoute', 'templates'])
 .controller('securityNotesListController',
   ($rootScope, $scope, $http)->
-    handleNoteChange = (response, tooltipText)->
-      if response.data.success
-        $('#noteModalForm').modal('hide')
-
-        $('#notes-list-lnk')
-          .prop('title', tooltipText)
-          .tooltip('fixTitle')
-          .tooltip('show')
-
-        setTimeout (->
-          $('#notes-list-lnk').tooltip('hide')
-        ), 3000
-
-        updateNotesList()
-
     updateNotesList = ->
       $http.get('<%= Rails.application.routes.url_helpers.security_notes_list_path %>').then (response) ->
         $scope.notes = response.data
@@ -47,27 +32,24 @@ angular.module('pass_keep', ['ngRoute', 'templates'])
         delete_path = '<%= Rails.application.routes.url_helpers.security_note_path(0) %>'.replace('0', noteId)
         $http.delete(delete_path)
           .then (response) ->
-            handleNoteChange response, '<%= I18n.t("sidebar.note_deleted")%>'
-
-    $rootScope.$on 'noteChanged', (event, data) ->
-      handleNoteChange data.response, data.message
+            $rootScope.$emit 'noteChanged', {response: response, message: '<%= I18n.t("sidebar.note_deleted")%>'}
 
     updateNotesList()
+
+    $rootScope.$on 'noteListUpdated', (event, data) ->
+      updateNotesList()
 
 ).controller('securityNotesController',
   ($rootScope, $scope, $http)->
     setScopeNote = (noteData)->
       $scope.note = noteData
-
       angular.forEach $scope.note.values_attributes, (value, key)->
         $scope.note.values_attributes[key].valType = if value.hidden then "password" else "text"
 
     $rootScope.$on 'noteClicked', (event, data) ->
       edit_path = '<%= Rails.application.routes.url_helpers.edit_security_note_path(0) %>'.replace('0', data)
-
       $http.get(edit_path).then (response) ->
         setScopeNote response.data
-
       $('#noteModalForm').modal('show')
 
     $scope.newNote = ->
@@ -113,6 +95,7 @@ angular.module('pass_keep', ['ngRoute', 'templates'])
           o.order
         )) + 1
       $('.add-note-val-btn').blur()
+      return false
 
 ).directive('afterElementsGenerated', ->
   (scope, element, attrs) ->
@@ -125,11 +108,32 @@ angular.module('pass_keep', ['ngRoute', 'templates'])
         $(@).removeAttr 'readonly'
       noteVal.blur ->
         $(@).attr 'readonly', true
-).config ($routeProvider)->
-  $routeProvider.when("/notes-list",
-    {
+
+).config(($routeProvider) ->
+    $routeProvider.when('/notes-list',
       templateUrl: "views/notes-list.html",
       controller: "securityNotesListController",
-      controllerAs: "securNotesListCtrl"
-    }
-  );
+      controllerAs: "securNotesListCtrl")
+      .when('/',
+        template: '')
+      .otherwise
+        template: ''
+
+).run ($rootScope)->
+  handleNoteChange = (response, tooltipText)->
+    if response.data.success
+      $('#noteModalForm').modal('hide')
+
+      $('#notes-list-lnk')
+        .prop('title', tooltipText)
+        .tooltip('fixTitle')
+        .tooltip('show')
+
+      setTimeout (->
+        $('#notes-list-lnk').tooltip('hide')
+      ), 3000
+
+      $rootScope.$emit 'noteListUpdated'
+
+  $rootScope.$on 'noteChanged', (event, data) ->
+    handleNoteChange data.response, data.message

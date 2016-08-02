@@ -12,7 +12,7 @@
           = password_field_tag :password, nil, placeholder: t('labels.password'), class: 'form-control'
         .checkbox
           = label_tag :remember do
-            = check_box_tag :remember, 0, false, class: 'checkbox'
+            = check_box_tag :remember, params[:remember], true, class: 'checkbox'
             = t('labels.remember_me')
         = submit_tag t('buttons.sign_in'), class: 'btn btn-lg btn-success btn-block'
       .text-center

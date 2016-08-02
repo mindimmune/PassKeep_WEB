@@ -7,17 +7,11 @@ class SecurityNote < ActiveRecord::Base
 
   validates :title, presence: true
 
-  after_find do |note|
-    note.values.each do |note_val|
-      note_val.value = SiteSecurity::Cryptor.instance.decrypt_value note_val.value.strip
-      note_val.key = SiteSecurity::Cryptor.instance.decrypt_value note_val.key.strip
-    end
-  end
-
   before_save do |note|
-    note.values.each do |note_val|
+    note.values.each_with_index do |note_val, index|
       note_val.value = SiteSecurity::Cryptor.instance.encrypt_value note_val.value.strip
       note_val.key = SiteSecurity::Cryptor.instance.encrypt_value note_val.key.strip
+      note_val.order = index + 1
     end
   end
 end

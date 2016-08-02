@@ -8,7 +8,7 @@ class UserSessionsController < ApplicationController
   end
 
   def create
-    if @user = login(params[:email], params[:password])
+    if @user = login(params[:email], params[:password], params[:remember])
       redirect_back_or_to root_path #, info: t('authentication.sign_in_succeed'
     else
       flash.now[:danger] = t('authentication.sign_in_failed')

@@ -16,6 +16,7 @@ class SecurityNotesController < ApplicationController
 
   def edit
     note = SecurityNote.find(params[:id])
+    note.values.order(:order)
     render text: security_note_json(note)
   end
 
