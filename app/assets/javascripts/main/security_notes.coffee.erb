@@ -138,5 +138,5 @@ angular.module('pass_keep', ['ngRoute', 'templates'])
   $rootScope.$on 'noteChanged', (event, data) ->
     handleNoteChange data.response, data.message]
 
-$(document).on 'ready page:load', ->
+$(document).on 'page:load', ->
   angular.bootstrap document.body, [ 'pass_keep' ]
